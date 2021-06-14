@@ -1,16 +1,20 @@
-# flutter_todo_list
+# Flutter Todo List (with Supabase)
 
-A new Flutter project.
+Sample App using Flutter and [Supabase](https://app.supabase.io/).  
+Works with to do examples given in the Supabase repo [examples](https://github.com/supabase/supabase/tree/master/examples).  
 
-## Getting Started
+## Create and configure supabase project
+1. Create new project
+   Sign up to Supabase - https://app.supabase.io and create a new project. Wait for your database to start.
+2. Run "Todo List" Quickstart
+   Once your database has started, run the "Todo List" quickstart. Inside of your project, enter the SQL editor tab and scroll down until you see TODO LIST: Build a basic todo list with Row Level Security.
+3. Get the URL and Key
+   Go to the Project Settings (the cog icon), open the API tab, and find your API URL and anon key, you'll need these in the next step.
+4. Copy `lib/config-example.dart` to `lib/config.dart`, add the values for `supabaseUrl` and `supabaseUrl` from Step 3.
 
-This project is a starting point for a Flutter application.
+## Real-time updates
 
-A few resources to get you started if this is your first Flutter project:
+For realtime updates to work, enable them in your project by going to Database->Replication.  
+1. Make sure insert, update, and delete are on.  
+2. Click under "source", and make sure the `todos` table is enabled.  
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
