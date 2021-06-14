@@ -17,56 +17,59 @@ class ToDoList extends StatelessWidget {
     return Container(
       width: 560,
       height: 800,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: double.infinity,
-            child: Text(
-              'Todo List.',
-              textAlign: TextAlign.left,
-              style: TextStyle(fontSize: 54, fontWeight: FontWeight.bold),
-            ),
-          ),
-          AddTask(
-            onAdd: (task) {
-              if (task.length < 4) {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text('Task must be at least four characters'),
-                  backgroundColor: Colors.red,
-                ));
-              }
-              store.insert(
-                  tableName, ToDo(task: task, isComplete: false).toMap());
-            },
-          ),
-          Expanded(
-              child: StreamBuilder<List<ToDo>>(
-                  stream: store.getStream(tableName, ToDo.fromJson),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<ToDo>> snapshot) {
-                    final todos = snapshot.data ?? [];
-                    return ListView.builder(
-                        itemCount: todos.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final todo = todos[index];
-                          return TaskListItem(
-                            todo: todo,
-                            onPressed: () {
-                              store.delete(tableName, todo.toMap());
-                            },
-                            onChecked: (value) {
-                              store.update(tableName,
-                                  todo.copyWith(isComplete: value).toMap());
-                            },
-                          );
-                        });
-                  })),
-          SizedBox(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
               width: double.infinity,
-              child: _logoutButton()
-          )
-        ],
+              child: Text(
+                'Todo List.',
+                textAlign: TextAlign.left,
+                style: TextStyle(fontSize: 54, fontWeight: FontWeight.bold),
+              ),
+            ),
+            AddTask(
+              onAdd: (task) {
+                if (task.length < 4) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text('Task must be at least four characters'),
+                    backgroundColor: Colors.red,
+                  ));
+                }
+                store.insert(
+                    tableName, ToDo(task: task, isComplete: false).toMap());
+              },
+            ),
+            Expanded(
+                child: StreamBuilder<List<ToDo>>(
+                    stream: store.getStream(tableName, ToDo.fromJson),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<ToDo>> snapshot) {
+                      final todos = snapshot.data ?? [];
+                      return ListView.builder(
+                          itemCount: todos.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final todo = todos[index];
+                            return TaskListItem(
+                              todo: todo,
+                              onPressed: () {
+                                store.delete(tableName, todo.toMap());
+                              },
+                              onChecked: (value) {
+                                store.update(tableName,
+                                    todo.copyWith(isComplete: value).toMap());
+                              },
+                            );
+                          });
+                    })),
+            SizedBox(
+                width: double.infinity,
+                child: _logoutButton()
+            )
+          ],
+        ),
       ),
     );
   }
