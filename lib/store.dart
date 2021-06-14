@@ -56,7 +56,7 @@ class Store {
     return true;
   }
 
-  Future<T> insert<T>(String table, Map<String, dynamic> element) async {
+  Future<dynamic> insert(String table, Map<String, dynamic> element) async {
     element['user_id'] = supabaseClient.auth.currentUser!.id;
     final res = await supabaseClient.from(table).insert(element).execute();
     if (res.error != null) {
@@ -67,7 +67,7 @@ class Store {
     }
   }
 
-  Future<T> update<T>(String table, Map<String, dynamic> element) async {
+  Future<dynamic> update(String table, Map<String, dynamic> element) async {
     final id = supabaseClient.auth.currentUser!.id;
     final res = await supabaseClient
         .from(table)
@@ -83,7 +83,7 @@ class Store {
     }
   }
 
-  Future<T> delete<T>(String table, Map<String, dynamic> element) async {
+  Future<dynamic> delete(String table, Map<String, dynamic> element) async {
     final id = supabaseClient.auth.currentUser!.id;
     final res = await supabaseClient
         .from(table)
