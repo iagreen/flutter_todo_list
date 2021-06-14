@@ -6,9 +6,8 @@ import 'package:supabase/supabase.dart';
 class Store {
   static const sessionKey = "SESSION_KEY";
   final SupabaseClient supabaseClient;
-  final SharedPreferences sharedPreferences;
 
-  Store(this.supabaseClient, this.sharedPreferences);
+  Store(this.supabaseClient);
 
   Future<String?> loginUser(String email, String password) async {
     final response =
@@ -16,6 +15,7 @@ class Store {
     if (response.error != null) {
       return response.error!.message;
     } else if (response.data?.persistSessionString != null) {
+      final sharedPreferences = await SharedPreferences.getInstance();
       sharedPreferences.setString(
           sessionKey, response.data!.persistSessionString);
     }
@@ -40,6 +40,7 @@ class Store {
   }
 
   Future<bool> restoreSession() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
     final exist = sharedPreferences.containsKey(sessionKey);
     if (!exist) {
       return false;

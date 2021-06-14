@@ -3,13 +3,12 @@ import 'package:flutter_todo_list/config.dart';
 import 'package:flutter_todo_list/login_screen.dart';
 import 'package:flutter_todo_list/store.dart';
 import 'package:flutter_todo_list/todo_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase/supabase.dart';
 
 void main() async {
   final supabaseClient = SupabaseClient(Config.supabaseUrl, Config.supabaseKey,
       autoRefreshToken: true);
-  final store = Store(supabaseClient, await SharedPreferences.getInstance());
+  final store = Store(supabaseClient);
   runApp(MyApp(store));
 }
 
